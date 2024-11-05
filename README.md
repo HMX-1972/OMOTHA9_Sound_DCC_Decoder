@@ -22,7 +22,7 @@ I am thinking of having DCC experts assemble this and provide it to beginners at
 <BR><BR>
 I am grateful for the development of these libraries and for allowing their use.
 <H3>Dcc Decoder</H3>
-In addition to the NMRA library, we also use the DesktopStation RP2040 library.
+<BR>
 <BR>file:     NmraDcc.cpp
 <BR>file:     NmraDcc.h
 <BR>file:     NmraDccMultiFunctionMotorDecoder.ino
@@ -39,7 +39,6 @@ In addition to the NMRA library, we also use the DesktopStation RP2040 library.
 <BR>author:   Ayanosuke(Maison de DCC) / Desktop Station
 <BR>license:  MIT License
 <BR>
-This uses the library for RP2040 created by fujigaya san.
 <H3>RP2040 Sound Generator</H3>
 <BR>file:     Timer_test2_752_31.ino
 <BR>author:   fujigaya
