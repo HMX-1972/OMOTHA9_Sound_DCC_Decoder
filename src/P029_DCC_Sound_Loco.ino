@@ -40,13 +40,13 @@
 #include "DccCV.h"
 #include "NmraDcc_pio.h"
 
-#define Version 0.01
+#define Version 0.02
 
 // Pin //
 #define PIN_MOTOR_A  1       // For ZERO
 #define PIN_MOTOR_B  2       // For ZERO
-//#define PIN_PCM    5       // For ZERO
-//#define PIN_AMP_SW 6       // For ZERO
+#define PIN_PCM      5       // For ZERO
+#define PIN_AMP_SW   6       // For ZERO
 #define PIN_DCC      7       // For ZERO
 #define PIN_LED     16       // For ZERO
 
@@ -66,6 +66,7 @@
 
 // Dcc //
 #define MAX_FUNC_NUMBER 29
+#define LOCO_LENGTH 8
 
 // Variables //
 uint8_t global_FuncValue[MAX_FUNC_NUMBER]; // Func 01-28
@@ -74,9 +75,10 @@ unsigned long loop_time_10 = 0;
 void setup() {
   // for debug
   Serial.begin(115200);
-
   // DCC
   dcc_setup();
+  // Sound
+  sound_setup();
   // LED
   led_Setup();
   // timer
@@ -86,9 +88,12 @@ void setup() {
 void loop() {
   // DCC
   dcc_loop();
+  // Sound
+  sound_loop();
   // 10ms Loop
   if ( millis() - loop_time_10  > 10)
   {
+    // LED
     led_loop();
     loop_time_10 = millis();
   }
