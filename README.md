@@ -47,4 +47,16 @@ This uses the library for RP2040 created by fujigaya san.
 
 <H2>Board Design</H2>
 The MPU uses the PR2040-ZERO (compatible). It is a development board equipped with the PR2040. The sound amplifier is the PAM8302A, and the motor driver is the BDR6133. It can support up to 13 LEDs in total, with 6 on the front and back, and 1 on the PR2040-ZERO.
+<BR>
+<BR>
+
+![RP2040-Decoder kicad_pcb_R04](https://github.com/user-attachments/assets/70040f30-e756-4f2c-aa87-fa536bc45464)
+Board (TOP)<BR><BR>
+
+![RP2040-Decoder kicad_pcb_R04a](https://github.com/user-attachments/assets/cf885e16-15f3-4bb9-9cfe-ddd42e53956c)
+Board (BOTTOM)<BR><BR>
+
+![2024-11-05 205401](https://github.com/user-attachments/assets/606df7d2-7140-4b70-b840-9ce6b8151438)
+Wiring<BR><BR>
+
 
