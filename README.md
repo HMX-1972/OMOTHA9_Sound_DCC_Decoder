@@ -54,7 +54,5 @@ Board (TOP)<BR><BR>
 ![RP2040-Decoder kicad_pcb_R04a](https://github.com/user-attachments/assets/cf885e16-15f3-4bb9-9cfe-ddd42e53956c)
 Board (BOTTOM)<BR><BR>
 
-![2024-11-05 205401](https://github.com/user-attachments/assets/606df7d2-7140-4b70-b840-9ce6b8151438)
-Wiring<BR><BR>
 
 
