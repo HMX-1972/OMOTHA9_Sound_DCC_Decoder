@@ -22,7 +22,6 @@ I am thinking of having DCC experts assemble this and provide it to beginners at
 <BR><BR>
 I am grateful for the development of these libraries and for allowing their use.
 <H3>Dcc Decoder</H3>
-<BR>
 <BR>file:     NmraDcc.cpp
 <BR>file:     NmraDcc.h
 <BR>file:     NmraDccMultiFunctionMotorDecoder.ino
