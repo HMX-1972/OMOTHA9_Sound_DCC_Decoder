@@ -45,14 +45,28 @@ void motor_setup() {
   AccRatio = Dcc.getCV(CV_ACCRATIO);
   DeccRatio = Dcc.getCV(CV_DECCRATIO);
   Dir_rev = Dcc.getCV(CV61_DIR_REV);
+  Kick_Time = Dcc.getCV(CV64_KICKSTART_T);
+  Kick_Voltage = Dcc.getCV(CV65_KICKSTART_V);
 
   global_LocoValue[Loco_TargetSpeed] = 1;
   global_LocoValue[Loco_Speed] = 1;
 
 }
 
-void motor_loop() {
+void motor_kick() {
+  static int kick_count = 0;
+  uint8_t  newPwm = CurrentSpeed;
+  if (newPwm > 1) {
+    if (kick_count  > Kick_Time) {
+      kick_count = 0;
+      newPwm = max(CurrentSpeed ,  Kick_Voltage);
+    }
+    kick_count ++;
+    Motor_Run(CurrentDirection, newPwm);
+  }
+}
 
+void motor_loop() {
   static int DirectionChange = 0;
 
   // Handle Direction
@@ -85,11 +99,13 @@ void motor_loop() {
   // Stop if speed = 0 or 1
   if (global_LocoValue[Loco_TargetSpeed] == 0) {
     global_LocoValue[Loco_Speed] = 1;
+    CurrentSpeed = 0;
     Motor_Run(CurrentDirection, 0);
 #ifdef DebugMotor
     Serial.println(" EMR / newPwm: 0");
 #endif
   } else if (global_LocoValue[Loco_Speed] == 1) {
+    CurrentSpeed = 0;
     Motor_Run(CurrentDirection, 0);
 #ifdef DebugMotor
     Serial.println(" Zero / newPwm: 0");
@@ -103,9 +119,9 @@ void motor_loop() {
 
     uint8_t modSpeed = global_LocoValue[Loco_Speed] - 1;
     uint8_t modSteps = numSpeedSteps - 1;
-    uint8_t newPwm = (uint8_t)vStart + modSpeed * vScaleFactor / modSteps;
+    CurrentSpeed = (uint8_t)vStart + modSpeed * vScaleFactor / modSteps;
 
-    Motor_Run(CurrentDirection, newPwm);
+    Motor_Run(CurrentDirection, CurrentSpeed);
 
 #ifdef DebugMotor
     Serial.print("New Speed: vStart: ");
@@ -121,7 +137,7 @@ void motor_loop() {
     Serial.print(" modSteps: ");
     Serial.print(modSteps);
     Serial.print(" newPwm: ");
-    Serial.println(newPwm);
+    Serial.println(CurrentSpeed);
 #endif
   }
 }

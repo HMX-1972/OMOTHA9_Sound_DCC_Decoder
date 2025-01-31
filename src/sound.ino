@@ -529,6 +529,20 @@ void sound_loop() {
     ex_FuncValue[FunctionNumber] = global_FuncValue[FunctionNumber];
   }
 
+  // Func==9 : Sound //
+  FunctionNumber = 9;
+  if (ex_FuncValue[FunctionNumber] != global_FuncValue[FunctionNumber]) {
+    if (global_FuncValue[FunctionNumber]) {
+      play_wav_repeat(SOUND_CH_OPTION3, "Sound_2.wav", 150);
+    } else {
+      if (wave_name[SOUND_CH_OPTION3] == "Sound_2.wav")
+      {
+        play_wav_next(SOUND_CH_OPTION3, "none", 100);
+      }
+    }
+    ex_FuncValue[FunctionNumber] = global_FuncValue[FunctionNumber];
+  }
+  
   // Run Sound
   if (global_FuncValue[4] == 1) {
     int DelayCycle = 4; // Delay for 250ms x 4

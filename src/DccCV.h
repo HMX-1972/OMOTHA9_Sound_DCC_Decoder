@@ -23,5 +23,7 @@
 #define CV60_MASTERVOL 60		      // CV60 HMX
 #define CV61_DIR_REV 61           // CV61 HMX
 #define CV62_LED_REV 62           // CV62 HMX
+#define CV64_KICKSTART_T 64       // CV64 HMX R104           
+#define CV65_KICKSTART_V 65       // CV65 HMX R104
 
 #endif

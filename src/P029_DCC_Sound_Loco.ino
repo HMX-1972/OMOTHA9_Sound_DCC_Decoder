@@ -64,7 +64,7 @@
 #define PIN_LED1_RT 8   // For ZERO
 
 #define PIN_LED2_SP 14  // For ZERO
-#define PIN_LED2_HL 15  // For ZERO
+#define PIN_LED2_HL 15  // For ZERO 
 #define PIN_LED2_LT 26  // For ZERO
 #define PIN_LED2_LH 27  // For ZERO
 #define PIN_LED2_RH 28  // For ZERO
@@ -85,6 +85,7 @@ uint8_t global_LocoValue[LOCO_LENGTH];      // 0:Speed, 1:Direction , 2:Target S
 uint8_t global_Draft = 0;                   // 0:OFF
 uint8_t global_ave_Draft = 0;               // 0:OFF
 uint8_t global_run_Delay = 0;               // 0:OFF
+unsigned long loop_time_2;
 unsigned long loop_time_10;
 unsigned long loop_time_250;
 bool watch_dog_dcc = false;
@@ -102,6 +103,7 @@ void setup() {
   // LED
   led_Setup();
   // timer
+  loop_time_2 = millis();
   loop_time_10 = millis();
   loop_time_250 = millis() - 250;
   //watchdog
@@ -113,6 +115,12 @@ void loop() {
   dcc_loop();
   // Sound
   sound_loop();
+  // 1ms Loop
+  if (millis() - loop_time_2 > 2) {
+    // Motor
+    motor_kick();
+    loop_time_2 = millis();
+  }
   // 10ms Loop
   if (millis() - loop_time_10 > 10) {
     // LED

@@ -35,6 +35,8 @@ CVPair FactoryDefaultCVs[] = {
   { CV60_MASTERVOL, 2 },
   { CV61_DIR_REV, 0 },
   { CV62_LED_REV, 0 },
+  { CV64_KICKSTART_T, 0 },
+  { CV65_KICKSTART_V, 0 },
 
   // These two CVs define the Long DCC Address
   { CV_MULTIFUNCTION_EXTENDED_ADDRESS_MSB, CALC_MULTIFUNCTION_EXTENDED_ADDRESS_MSB(DEFAULT_DECODER_ADDRESS) },
@@ -51,6 +53,7 @@ uint8_t FactoryDefaultCVIndex = 0;
 // Some global state variables
 
 uint8_t CurrentDirection = 0;
+uint8_t CurrentSpeed = 0;
 uint8_t numSpeedSteps = SPEED_STEP_128;
 
 uint8_t vStart;
@@ -60,6 +63,10 @@ uint8_t DeccRatio;
 uint8_t MasterVol;
 uint8_t Dir_rev;
 uint8_t Led_rev;
+uint8_t Kick_Time;
+uint8_t Kick_Voltage;
+
+
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -81,6 +88,11 @@ void dcc_setup() {
 
   // Call the main DCC Init function to enable the DCC Receiver
   Dcc.init(140, 1, FLAGS_MY_ADDRESS_ONLY, 0);
+
+  if ( Dcc.getCV(CV_MULTIFUNCTION_PRIMARY_ADDRESS) == 0xFF )
+  {
+    notifyCVResetFactoryDefault();
+  }
 }
 
 //---------------------------------------------------------------------
@@ -374,10 +386,13 @@ void notifyCVAck(void) {
 #ifdef DEBUG_DCC_ACK
   Serial.println("notifyCVAck");
 #endif
-
   MOTOR_SetPWM(4095, 0);
+  led_all_on();
+  led_set();
   delay(8);
   MOTOR_SetPWM(0, 0);
+  led_all_off();
+  led_set();
 }
 
 // This call-back function is called when a CV Value changes so we can update CVs we're using
@@ -410,6 +425,15 @@ void notifyCVChange(uint16_t CV, uint8_t Value) {
     case CV62_LED_REV:
       Led_rev = Value;
       break;
+
+    case  CV64_KICKSTART_T:
+      Kick_Time = Value;
+      break;
+
+    case  CV65_KICKSTART_V:
+      Kick_Voltage = Value;
+      break;
+
   }
 }
 
